@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 public class VIPRankData implements DataHandler {
     private Permission permission;
     private ArrayList<String> groups = new ArrayList<>();
+    private ArrayList<DataPackage> datas = new ArrayList<>();
 
     public VIPRankData(){
         permission = VaultHandler.permission;
@@ -23,10 +24,7 @@ public class VIPRankData implements DataHandler {
 
     @Override
     public boolean loadDatas() {
-        List<OfflinePlayer> vipers = Arrays.stream(Bukkit.getOfflinePlayers()).filter(player -> !player.isOp() &&
-                (!permission.getPrimaryGroup(null,player).equalsIgnoreCase("admin") ||
-                        !permission.getPrimaryGroup(null,player).equalsIgnoreCase("owner") ||
-                        !permission.getPrimaryGroup(null,player).equalsIgnoreCase("default"))).collect(Collectors.toList());
+        List<OfflinePlayer> vipers = Arrays.stream(Bukkit.getOfflinePlayers()).filter(player -> !player.isOp()).collect(Collectors.toList());
         for (OfflinePlayer viper : vipers) {
             String group = permission.getPrimaryGroup(null,viper);
             if (group == null) continue;

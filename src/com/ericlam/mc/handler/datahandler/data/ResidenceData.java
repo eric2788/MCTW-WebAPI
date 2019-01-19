@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 public class ResidenceData implements DataHandler {
+    private ArrayList<DataPackage> datas = new ArrayList<>();
 
     @Override
     public boolean loadDatas() {
@@ -18,11 +19,8 @@ public class ResidenceData implements DataHandler {
         PermissionGroup group;
         for (OfflinePlayer player : Bukkit.getOfflinePlayers()) {
             user = new ResidencePlayer(player);
-            group = user.getGroup();
-            int x = group.getMaxX();
-            int y = group.getMaxY();
-            int z = group.getMaxZ();
-            datas.add(new DataPackage(player,x*y*z));
+            DataPackage dataPackage = new DataPackage(player,user.getResAmount());
+            if (!datas.contains(dataPackage)) datas.add(dataPackage);
         }
         return datas.size() > 0;
     }
