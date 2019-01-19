@@ -1,0 +1,4 @@
+# API伺服器端口
+web-port: 8080
+# 正版服/盜版服
+premium: true
