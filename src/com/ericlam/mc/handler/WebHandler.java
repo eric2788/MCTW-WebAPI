@@ -33,8 +33,8 @@ public class WebHandler extends AbstractHandler {
             case "/viprank":
                 writer.println(JSONArray.toJSONString(APIHandler.getAPIDatas(APIData.VIPRANK)));
                 break;
-            case "/refresh":
-                writer.println(APIHandler.refreshDatas().toJSONString());
+            case "/refresh_data":
+                writer.println(APIHandler.getLastUpdate().toJSONString());
                 break;
             default:
                 writer.println(new JSONObject().toJSONString());

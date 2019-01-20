@@ -19,6 +19,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -63,21 +64,18 @@ public class APIHandler {
         return datalist;
     }
 
-    public static JSONObject refreshDatas() {
-        boolean eco = EconomyData.getInstance().loadDatas();
-        boolean res = ResidenceData.getInstance().loadDatas();
-        boolean vip = VIPRankData.getInstance().loadDatas();
-        HashMap<String,Boolean> result = new HashMap<>();
-        result.put("success",eco && vip && res);
-        return new JSONObject(result);
+    public static void refreshDatas(Plugin plugin) {
+        EconomyData.getInstance().loadDatas();
+        ResidenceData.getInstance().loadDatas();
+        VIPRankData.getInstance().loadDatas();
+        plugin.getLogger().info("API 資料更新成功。");
     }
 
-    public static boolean checkDuplicates(OfflinePlayer player, ArrayList<DataPackage> datas) {
-        boolean duplicate = false;
-        for (DataPackage data : datas) {
-            if (data.getPlayer().getName().equalsIgnoreCase(player.getName()))  duplicate = true;
-        }
-        return duplicate;
+    static JSONObject getLastUpdate() {
+        LocalDateTime updateTime = RefreshScheduler.localDateTime;
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("last_update", updateTime != null ? updateTime.toString() : "尚未");
+        return new JSONObject(result);
     }
 
     public static void clearPlayerData(Plugin plugin, boolean isPremium) throws IOException {
@@ -116,6 +114,6 @@ public class APIHandler {
             fileOutputStream.close();
             FileUtils.forceDelete(directory);
         }
-        refreshDatas();
+        refreshDatas(plugin);
     }
 }

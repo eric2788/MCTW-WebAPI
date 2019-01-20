@@ -1,6 +1,7 @@
 package com.ericlam.mc.main;
 
 import com.ericlam.mc.handler.APIHandler;
+import com.ericlam.mc.handler.RefreshScheduler;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
@@ -22,16 +23,18 @@ public class ConfigManager {
         port = config.getInt("web-port");
         premiumServer = config.getBoolean("premium");
         plugin.getLogger().info("正版資料過濾將在稍後在後台啟動。");
+        new RefreshScheduler(plugin);
         new BukkitRunnable() {
             @Override
             public void run() {
-                APIHandler.refreshDatas();
                 if (ConfigManager.filter_enabled) {
                     try {
                         APIHandler.clearPlayerData(plugin, premiumServer);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+                } else {
+                    APIHandler.refreshDatas(plugin);
                 }
             }
         }.runTaskAsynchronously(plugin);
