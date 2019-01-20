@@ -1,6 +1,8 @@
 package com.ericlam.mc.handler.datahandler.data;
 
 
+import com.earth2me.essentials.Essentials;
+import com.earth2me.essentials.User;
 import com.ericlam.mc.handler.VaultHandler;
 import com.ericlam.mc.handler.datahandler.DataHandler;
 import com.ericlam.mc.handler.datahandler.DataPackage;
@@ -9,21 +11,33 @@ import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 
 import java.util.ArrayList;
-import java.util.stream.Collectors;
 
 public class EconomyData implements DataHandler {
 
     private final Economy economy;
     private ArrayList<DataPackage> datas = new ArrayList<>();
+    private static EconomyData data;
 
-    public EconomyData(){
+    private EconomyData() {
         economy = VaultHandler.economy;
+    }
+
+    public static EconomyData getInstance() {
+        if (data == null) data = new EconomyData();
+        return data;
     }
 
     @Override
     public boolean loadDatas() {
         for (OfflinePlayer player : Bukkit.getOfflinePlayers()) {
             double money = economy.getBalance(player);
+            if (money == 0) {
+                Essentials ess = (Essentials) Essentials.getProvidingPlugin(Essentials.class);
+                User user = ess.getUser(player.getUniqueId());
+                if (user == null) continue;
+                money = user.getMoney().intValue();
+            }
+            if (money == 0) continue;
             DataPackage dataPackage = new DataPackage(player,money);
             if (!datas.contains(dataPackage))datas.add(dataPackage);
         }
@@ -32,6 +46,6 @@ public class EconomyData implements DataHandler {
 
     @Override
     public ArrayList<DataPackage> gainDataList() {
-        return datas.stream().filter(data -> data.getData() != 0).collect(Collectors.toCollection(ArrayList::new));
+        return datas;
     }
 }

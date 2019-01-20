@@ -2,4 +2,4 @@ name: MCTW-Web-API
 main: com.ericlam.mc.main.MCTWWebAPI
 version: 1.2.0
 author: Eric Lam
-depend: [Vault, Residence]
+depend: [Vault, Residence, Essentials, GroupManager]

@@ -9,5 +9,7 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="paperspigot1.13.2" level="project" />
     <orderEntry type="library" name="Vault" level="project" />
+    <orderEntry type="library" name="EssentialsXGroupManager-2.0.1" level="project" />
+    <orderEntry type="library" name="EssentialsX-2.15.0.52" level="project" />
   </component>
 </module>

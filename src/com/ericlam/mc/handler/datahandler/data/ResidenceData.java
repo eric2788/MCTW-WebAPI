@@ -1,25 +1,35 @@
 package com.ericlam.mc.handler.datahandler.data;
 
+import com.bekvon.bukkit.residence.Residence;
 import com.bekvon.bukkit.residence.containers.ResidencePlayer;
-import com.bekvon.bukkit.residence.permissions.PermissionGroup;
+import com.bekvon.bukkit.residence.protection.ClaimedResidence;
 import com.ericlam.mc.handler.datahandler.DataHandler;
 import com.ericlam.mc.handler.datahandler.DataPackage;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 
 import java.util.ArrayList;
-import java.util.stream.Collectors;
 
 public class ResidenceData implements DataHandler {
     private ArrayList<DataPackage> datas = new ArrayList<>();
+    private static ResidenceData data;
+
+    public static ResidenceData getInstance() {
+        if (data == null) data = new ResidenceData();
+        return data;
+    }
 
     @Override
     public boolean loadDatas() {
         ResidencePlayer user;
-        PermissionGroup group;
         for (OfflinePlayer player : Bukkit.getOfflinePlayers()) {
-            user = new ResidencePlayer(player);
-            DataPackage dataPackage = new DataPackage(player,user.getResAmount());
+            user = Residence.getInstance().getPlayerManager().getResidencePlayer(player.getUniqueId());
+            int size = 0;
+            for (ClaimedResidence residence : user.getResList()) {
+                size += residence.getTotalSize();
+            }
+            if (size == 0) continue;
+            DataPackage dataPackage = new DataPackage(player, size);
             if (!datas.contains(dataPackage)) datas.add(dataPackage);
         }
         return datas.size() > 0;
@@ -27,6 +37,6 @@ public class ResidenceData implements DataHandler {
 
     @Override
     public ArrayList<DataPackage> gainDataList() {
-        return datas.stream().filter(data -> data.getData() != 0).collect(Collectors.toCollection(ArrayList::new));
+        return datas;
     }
 }
