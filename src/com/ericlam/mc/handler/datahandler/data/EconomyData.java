@@ -6,11 +6,15 @@ import com.earth2me.essentials.User;
 import com.ericlam.mc.handler.VaultHandler;
 import com.ericlam.mc.handler.datahandler.DataHandler;
 import com.ericlam.mc.handler.datahandler.DataPackage;
+import com.ericlam.mc.main.ConfigManager;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class EconomyData implements DataHandler {
 
@@ -30,7 +34,8 @@ public class EconomyData implements DataHandler {
     @Override
     public boolean loadDatas() {
         datas.clear();
-        for (OfflinePlayer player : Bukkit.getOfflinePlayers()) {
+        List<OfflinePlayer> offlinePlayers = Arrays.stream(Bukkit.getOfflinePlayers()).filter(player -> !ConfigManager.filter_players.contains(player.getName())).collect(Collectors.toList());
+        for (OfflinePlayer player : offlinePlayers) {
             double money = economy.getBalance(player);
             if (money == 0) {
                 Essentials ess = (Essentials) Essentials.getProvidingPlugin(Essentials.class);

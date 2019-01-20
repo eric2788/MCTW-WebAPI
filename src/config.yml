@@ -8,3 +8,9 @@ web-port: 8080
 filter: false
 # 是否為正版服 ( 是則使用正版皮膚，非則使用盜版皮膚)
 premium: true
+# 玩家過濾列表
+# 過濾不想出現在排行榜的玩家
+filter-players:
+  - Notch
+  - md_5
+  - Herobrine

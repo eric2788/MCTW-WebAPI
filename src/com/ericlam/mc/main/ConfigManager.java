@@ -9,10 +9,12 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 public class ConfigManager {
 
     public static boolean filter_enabled, premiumServer;
+    public static List<String> filter_players;
     static int port;
 
     ConfigManager(Plugin plugin){
@@ -22,6 +24,7 @@ public class ConfigManager {
         filter_enabled = config.getBoolean("filter");
         port = config.getInt("web-port");
         premiumServer = config.getBoolean("premium");
+        filter_players = config.getStringList("filter-players");
         new RefreshScheduler(plugin);
         new BukkitRunnable() {
             @Override

@@ -3,6 +3,7 @@ package com.ericlam.mc.handler.datahandler.data;
 import com.ericlam.mc.handler.VaultHandler;
 import com.ericlam.mc.handler.datahandler.DataHandler;
 import com.ericlam.mc.handler.datahandler.DataPackage;
+import com.ericlam.mc.main.ConfigManager;
 import net.milkbowl.vault.permission.Permission;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -31,7 +32,7 @@ public class VIPRankData implements DataHandler {
     @Override
     public boolean loadDatas() {
         datas.clear();
-        List<OfflinePlayer> vipers = Arrays.stream(Bukkit.getOfflinePlayers()).filter(player -> !player.isOp()).collect(Collectors.toList());
+        List<OfflinePlayer> vipers = Arrays.stream(Bukkit.getOfflinePlayers()).filter(player -> !ConfigManager.filter_players.contains(player.getName())).collect(Collectors.toList());
         for (OfflinePlayer viper : vipers) {
             String group = permission.getPrimaryGroup(null,viper);
             if (group == null) {
