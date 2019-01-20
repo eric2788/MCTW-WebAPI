@@ -30,6 +30,7 @@ public class VIPRankData implements DataHandler {
 
     @Override
     public boolean loadDatas() {
+        datas.clear();
         List<OfflinePlayer> vipers = Arrays.stream(Bukkit.getOfflinePlayers()).filter(player -> !player.isOp()).collect(Collectors.toList());
         for (OfflinePlayer viper : vipers) {
             String group = permission.getPrimaryGroup(null,viper);

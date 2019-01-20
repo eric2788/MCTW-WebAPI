@@ -21,6 +21,7 @@ public class ResidenceData implements DataHandler {
 
     @Override
     public boolean loadDatas() {
+        datas.clear();
         ResidencePlayer user;
         for (OfflinePlayer player : Bukkit.getOfflinePlayers()) {
             user = Residence.getInstance().getPlayerManager().getResidencePlayer(player.getUniqueId());

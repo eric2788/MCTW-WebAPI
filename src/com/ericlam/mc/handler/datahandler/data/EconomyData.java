@@ -29,6 +29,7 @@ public class EconomyData implements DataHandler {
 
     @Override
     public boolean loadDatas() {
+        datas.clear();
         for (OfflinePlayer player : Bukkit.getOfflinePlayers()) {
             double money = economy.getBalance(player);
             if (money == 0) {
