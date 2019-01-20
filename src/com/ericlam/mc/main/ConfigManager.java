@@ -22,13 +22,13 @@ public class ConfigManager {
         filter_enabled = config.getBoolean("filter");
         port = config.getInt("web-port");
         premiumServer = config.getBoolean("premium");
-        plugin.getLogger().info("正版資料過濾將在稍後在後台啟動。");
         new RefreshScheduler(plugin);
         new BukkitRunnable() {
             @Override
             public void run() {
                 if (ConfigManager.filter_enabled) {
                     try {
+                        plugin.getLogger().info("玩家資料過濾將在稍後在後台啟動。");
                         APIHandler.clearPlayerData(plugin, premiumServer);
                     } catch (IOException e) {
                         e.printStackTrace();
