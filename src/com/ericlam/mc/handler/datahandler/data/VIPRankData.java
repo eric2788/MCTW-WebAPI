@@ -8,14 +8,14 @@ import net.milkbowl.vault.permission.Permission;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class VIPRankData implements DataHandler {
     private Permission permission;
-    private ArrayList<DataPackage> datas = new ArrayList<>();
+    private HashSet<DataPackage> datas = new HashSet<>();
     private static VIPRankData data;
 
 
@@ -30,7 +30,7 @@ public class VIPRankData implements DataHandler {
 
     @Override
     public boolean loadDatas() {
-        ArrayList<DataPackage> clone = new ArrayList<>();
+        HashSet<DataPackage> clone = new HashSet<>();
         List<OfflinePlayer> vipers = Arrays.stream(Bukkit.getOfflinePlayers()).filter(player -> !ConfigManager.filter_players.contains(player.getName())).collect(Collectors.toList());
 
         for (OfflinePlayer viper : vipers) {
@@ -45,15 +45,15 @@ public class VIPRankData implements DataHandler {
             clone.add(new DataPackage(viper, (double) groupIndex));
             int row = clone.size();
             if (row % 300 == 0 && row != 0) {
-                datas = clone; // If data is too huge, will get every 300 data for buffer
+                datas = (HashSet<DataPackage>) clone.clone(); // If data is too huge, will get every 300 data for buffer
             }
         }
-        datas = clone;
+        datas = (HashSet<DataPackage>) clone.clone();
         return datas.size() > 0;
     }
 
     @Override
-    public ArrayList<DataPackage> gainDataList() {
+    public HashSet<DataPackage> gainDataList() {
         return datas;
     }
 }

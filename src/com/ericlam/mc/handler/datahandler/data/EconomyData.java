@@ -11,15 +11,15 @@ import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class EconomyData implements DataHandler {
 
     private final Economy economy;
-    private ArrayList<DataPackage> datas = new ArrayList<>();
+    private HashSet<DataPackage> datas = new HashSet<>();
     private static EconomyData data;
 
     private EconomyData() {
@@ -33,7 +33,7 @@ public class EconomyData implements DataHandler {
 
     @Override
     public boolean loadDatas() {
-        ArrayList<DataPackage> clone = new ArrayList<>();
+        HashSet<DataPackage> clone = new HashSet<>();
         List<OfflinePlayer> offlinePlayers = Arrays.stream(Bukkit.getOfflinePlayers()).filter(player -> !ConfigManager.filter_players.contains(player.getName())).collect(Collectors.toList());
         for (OfflinePlayer player : offlinePlayers) {
             if (ConfigManager.debug) plugin.getLogger().info("經濟資料: 正在獲取 " + player.getName() + " 的資料");
@@ -49,15 +49,15 @@ public class EconomyData implements DataHandler {
             clone.add(dataPackage);
             int row = clone.size();
             if (row % 300 == 0 && row != 0) {
-                datas = clone; // If data is too huge, will get every 300 data for buffer
+                datas = (HashSet<DataPackage>) clone.clone(); // If data is too huge, will get every 300 data for buffer
             }
         }
-        datas = clone;
+        datas = (HashSet<DataPackage>) clone.clone();
         return datas.size() > 0;
     }
 
     @Override
-    public ArrayList<DataPackage> gainDataList() {
+    public HashSet<DataPackage> gainDataList() {
         return datas;
     }
 }
