@@ -48,7 +48,7 @@ public class EconomyData implements DataHandler {
             DataPackage dataPackage = new DataPackage(player,money);
             clone.add(dataPackage);
             int row = clone.size();
-            if (row % 300 == 0 && row != 0) {
+            if (row % 500 == 0 && row != 0) {
                 datas = (HashSet<DataPackage>) clone.clone(); // If data is too huge, will get every 300 data for buffer
             }
         }

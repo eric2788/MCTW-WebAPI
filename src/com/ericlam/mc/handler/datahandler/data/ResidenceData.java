@@ -38,7 +38,7 @@ public class ResidenceData implements DataHandler {
             if (size == 0) continue;
             clone.add(new DataPackage(player, size));
             int row = clone.size();
-            if (row % 300 == 0 && row != 0) {
+            if (row % 100 == 0 && row != 0) {
                 datas = (HashSet<DataPackage>) clone.clone(); // If data is too huge, will get every 300 data for buffer
             }
         }
