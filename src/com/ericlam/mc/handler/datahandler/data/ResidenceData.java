@@ -36,7 +36,7 @@ public class ResidenceData implements DataHandler {
             }
             if (size == 0) continue;
             DataPackage dataPackage = new DataPackage(player, size);
-            if (!datas.contains(dataPackage)) datas.add(dataPackage);
+            datas.add(dataPackage);
         }
         return datas.size() > 0;
     }

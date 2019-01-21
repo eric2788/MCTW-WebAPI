@@ -1,7 +1,6 @@
 package com.ericlam.mc.handler.datahandler;
 
 import org.bukkit.OfflinePlayer;
-import org.bukkit.entity.Player;
 
 public class DataPackage {
     private OfflinePlayer player;

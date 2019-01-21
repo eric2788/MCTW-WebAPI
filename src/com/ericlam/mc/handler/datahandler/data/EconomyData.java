@@ -45,7 +45,7 @@ public class EconomyData implements DataHandler {
             }
             if (money == 0) continue;
             DataPackage dataPackage = new DataPackage(player,money);
-            if (!datas.contains(dataPackage))datas.add(dataPackage);
+            datas.add(dataPackage);
         }
         return datas.size() > 0;
     }

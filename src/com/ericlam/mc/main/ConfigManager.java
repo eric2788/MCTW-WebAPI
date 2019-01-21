@@ -13,8 +13,10 @@ import java.util.List;
 
 public class ConfigManager {
 
-    public static boolean filter_enabled, premiumServer;
+    public static boolean premiumServer;
+    public static String server_name;
     public static List<String> filter_players;
+    private boolean filter_enabled;
     static int port;
 
     ConfigManager(Plugin plugin){
@@ -25,11 +27,12 @@ public class ConfigManager {
         port = config.getInt("web-port");
         premiumServer = config.getBoolean("premium");
         filter_players = config.getStringList("filter-players");
+        server_name = config.getString("server-name");
         new RefreshScheduler(plugin);
         new BukkitRunnable() {
             @Override
             public void run() {
-                if (ConfigManager.filter_enabled) {
+                if (filter_enabled) {
                     try {
                         plugin.getLogger().info("玩家資料過濾將在稍後在後台啟動。");
                         APIHandler.clearPlayerData(plugin, premiumServer);

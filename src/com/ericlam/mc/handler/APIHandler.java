@@ -47,6 +47,7 @@ public class APIHandler {
         for (DataPackage aPackage : data.gainDataList()) {
             LinkedHashMap<String,Object> object = new LinkedHashMap<>();
             OfflinePlayer player = aPackage.getPlayer();
+            object.put("server", ConfigManager.server_name);
             object.put("player",player.getName());
             object.put("data",(int)aPackage.getData());
             object.put("uuid", ConfigManager.premiumServer ? player.getUniqueId().toString() : steveUUID);
@@ -65,10 +66,10 @@ public class APIHandler {
     }
 
     public static void refreshDatas(Plugin plugin) {
-        EconomyData.getInstance().loadDatas();
-        ResidenceData.getInstance().loadDatas();
-        VIPRankData.getInstance().loadDatas();
-        plugin.getLogger().info("API 資料更新成功。");
+        boolean eco = EconomyData.getInstance().loadDatas();
+        boolean res = ResidenceData.getInstance().loadDatas();
+        boolean vip = VIPRankData.getInstance().loadDatas();
+        plugin.getLogger().info("API 資料更新" + (eco && res && vip ? "成功" : "失敗") + "。");
     }
 
     static JSONObject getLastUpdate() {
