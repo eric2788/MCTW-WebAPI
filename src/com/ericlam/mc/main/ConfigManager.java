@@ -13,7 +13,7 @@ import java.util.List;
 
 public class ConfigManager {
 
-    public static boolean premiumServer;
+    public static boolean premiumServer, debug;
     public static String server_name, steve_uuid;
     public static List<String> filter_players;
     private boolean filter_enabled;
@@ -29,6 +29,7 @@ public class ConfigManager {
         filter_players = config.getStringList("filter-players");
         server_name = config.getString("server-name");
         steve_uuid = config.getString("steve-uuid");
+        debug = config.getBoolean("debug");
         new RefreshScheduler(plugin);
         new BukkitRunnable() {
             @Override

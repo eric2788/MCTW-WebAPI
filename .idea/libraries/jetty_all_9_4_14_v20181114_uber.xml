@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="jetty-all-9.4.14.v20181114-uber">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../LIBRARY-OTHERS/jetty-all-9.4.14.v20181114-uber.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

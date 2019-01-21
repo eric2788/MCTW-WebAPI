@@ -18,3 +18,6 @@ filter-players:
   - Notch
   - md_5
   - Herobrine
+# 檢測插件目前正在運行的狀態
+# 洗屏注意!!!!!
+debug: false

@@ -29,15 +29,18 @@ public class ResidenceData implements DataHandler {
         ResidencePlayer user;
         List<OfflinePlayer> offlinePlayers = Arrays.stream(Bukkit.getOfflinePlayers()).filter(player -> !ConfigManager.filter_players.contains(player.getName())).collect(Collectors.toList());
         for (OfflinePlayer player : offlinePlayers) {
-            System.out.println("Residence: Getting " + player.getName());
+            if (ConfigManager.debug) plugin.getLogger().info("領地資料: 正在獲取 " + player.getName() + " 的資料");
             user = Residence.getInstance().getPlayerManager().getResidencePlayer(player.getUniqueId());
             int size = 0;
             for (ClaimedResidence residence : user.getResList()) {
                 size += residence.getTotalSize();
             }
             if (size == 0) continue;
-            DataPackage dataPackage = new DataPackage(player, size);
-            clone.add(dataPackage);
+            clone.add(new DataPackage(player, size));
+            int row = clone.size();
+            if (row % 300 == 0 && row != 0) {
+                datas = clone; // If data is too huge, will get every 300 data for buffer
+            }
         }
         datas = clone;
         return datas.size() > 0;

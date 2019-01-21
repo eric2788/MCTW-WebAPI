@@ -36,7 +36,7 @@ public class EconomyData implements DataHandler {
         ArrayList<DataPackage> clone = new ArrayList<>();
         List<OfflinePlayer> offlinePlayers = Arrays.stream(Bukkit.getOfflinePlayers()).filter(player -> !ConfigManager.filter_players.contains(player.getName())).collect(Collectors.toList());
         for (OfflinePlayer player : offlinePlayers) {
-            System.out.println("ECO: Getting " + player.getName());
+            if (ConfigManager.debug) plugin.getLogger().info("經濟資料: 正在獲取 " + player.getName() + " 的資料");
             double money = economy.getBalance(player);
             if (money == 0) {
                 Essentials ess = (Essentials) Essentials.getProvidingPlugin(Essentials.class);
@@ -44,9 +44,13 @@ public class EconomyData implements DataHandler {
                 if (user == null) continue;
                 money = user.getMoney().intValue();
             }
-            if (money == 0) continue;
+            if (Math.round(money) == 0) continue;
             DataPackage dataPackage = new DataPackage(player,money);
             clone.add(dataPackage);
+            int row = clone.size();
+            if (row % 300 == 0 && row != 0) {
+                datas = clone; // If data is too huge, will get every 300 data for buffer
+            }
         }
         datas = clone;
         return datas.size() > 0;
