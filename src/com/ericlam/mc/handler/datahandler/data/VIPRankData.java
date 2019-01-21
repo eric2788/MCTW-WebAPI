@@ -18,6 +18,7 @@ public class VIPRankData implements DataHandler {
     private ArrayList<DataPackage> datas = new ArrayList<>();
     private static VIPRankData data;
 
+
     private VIPRankData() {
         permission = VaultHandler.permission;
     }
@@ -29,9 +30,10 @@ public class VIPRankData implements DataHandler {
 
     @Override
     public boolean loadDatas() {
-        datas.clear();
+        ArrayList<DataPackage> clone = new ArrayList<>();
         List<OfflinePlayer> vipers = Arrays.stream(Bukkit.getOfflinePlayers()).filter(player -> !ConfigManager.filter_players.contains(player.getName())).collect(Collectors.toList());
         for (OfflinePlayer viper : vipers) {
+            System.out.println("VIP: Getting " + viper.getName());
             String group = permission.getPrimaryGroup(null,viper);
             if (group == null) {
                 group = permission.getPrimaryGroup(Bukkit.getWorlds().get(0).getName(), viper);
@@ -39,8 +41,9 @@ public class VIPRankData implements DataHandler {
             if (!group.contains("VIP")) continue;
             String groupS = group.replaceAll("\\D", "");
             int groupIndex = Integer.parseInt(groupS.isEmpty() ? "0" : groupS);
-            datas.add(new DataPackage(viper, (double) groupIndex));
+            clone.add(new DataPackage(viper, (double) groupIndex));
         }
+        datas = clone;
         return datas.size() > 0;
     }
 

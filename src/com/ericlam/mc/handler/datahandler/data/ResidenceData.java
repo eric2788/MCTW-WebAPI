@@ -25,10 +25,11 @@ public class ResidenceData implements DataHandler {
 
     @Override
     public boolean loadDatas() {
-        datas.clear();
+        ArrayList<DataPackage> clone = new ArrayList<>();
         ResidencePlayer user;
         List<OfflinePlayer> offlinePlayers = Arrays.stream(Bukkit.getOfflinePlayers()).filter(player -> !ConfigManager.filter_players.contains(player.getName())).collect(Collectors.toList());
         for (OfflinePlayer player : offlinePlayers) {
+            System.out.println("Residence: Getting " + player.getName());
             user = Residence.getInstance().getPlayerManager().getResidencePlayer(player.getUniqueId());
             int size = 0;
             for (ClaimedResidence residence : user.getResList()) {
@@ -36,8 +37,9 @@ public class ResidenceData implements DataHandler {
             }
             if (size == 0) continue;
             DataPackage dataPackage = new DataPackage(player, size);
-            datas.add(dataPackage);
+            clone.add(dataPackage);
         }
+        datas = clone;
         return datas.size() > 0;
     }
 

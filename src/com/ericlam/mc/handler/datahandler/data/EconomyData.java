@@ -33,9 +33,10 @@ public class EconomyData implements DataHandler {
 
     @Override
     public boolean loadDatas() {
-        datas.clear();
+        ArrayList<DataPackage> clone = new ArrayList<>();
         List<OfflinePlayer> offlinePlayers = Arrays.stream(Bukkit.getOfflinePlayers()).filter(player -> !ConfigManager.filter_players.contains(player.getName())).collect(Collectors.toList());
         for (OfflinePlayer player : offlinePlayers) {
+            System.out.println("ECO: Getting " + player.getName());
             double money = economy.getBalance(player);
             if (money == 0) {
                 Essentials ess = (Essentials) Essentials.getProvidingPlugin(Essentials.class);
@@ -45,8 +46,9 @@ public class EconomyData implements DataHandler {
             }
             if (money == 0) continue;
             DataPackage dataPackage = new DataPackage(player,money);
-            datas.add(dataPackage);
+            clone.add(dataPackage);
         }
+        datas = clone;
         return datas.size() > 0;
     }
 

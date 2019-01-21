@@ -66,6 +66,7 @@ public class APIHandler {
     }
 
     public static void refreshDatas(Plugin plugin) {
+        plugin.getLogger().info("正在更新 API 資料....");
         boolean eco = EconomyData.getInstance().loadDatas();
         boolean res = ResidenceData.getInstance().loadDatas();
         boolean vip = VIPRankData.getInstance().loadDatas();
