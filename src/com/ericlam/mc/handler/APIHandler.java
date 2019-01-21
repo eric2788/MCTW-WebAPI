@@ -28,7 +28,7 @@ public class APIHandler {
 
     static ArrayList<JSONObject> getAPIDatas(APIData dataType){
        ArrayList<JSONObject> datalist = new ArrayList<>();
-       String steveUUID = "8667ba71-b85a-4004-af54-457a9734eed7";
+        String steveUUID = ConfigManager.steve_uuid;
        DataHandler data;
        switch (dataType){
            case ECONOMY:

@@ -14,7 +14,7 @@ import java.util.List;
 public class ConfigManager {
 
     public static boolean premiumServer;
-    public static String server_name;
+    public static String server_name, steve_uuid;
     public static List<String> filter_players;
     private boolean filter_enabled;
     static int port;
@@ -28,6 +28,7 @@ public class ConfigManager {
         premiumServer = config.getBoolean("premium");
         filter_players = config.getStringList("filter-players");
         server_name = config.getString("server-name");
+        steve_uuid = config.getString("steve-uuid");
         new RefreshScheduler(plugin);
         new BukkitRunnable() {
             @Override
