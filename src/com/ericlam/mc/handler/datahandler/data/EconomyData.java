@@ -32,7 +32,7 @@ public class EconomyData implements DataHandler {
     }
 
     @Override
-    public boolean loadDatas() {
+    public void loadDatas() {
         HashSet<DataPackage> clone = new HashSet<>();
         List<OfflinePlayer> offlinePlayers = Arrays.stream(Bukkit.getOfflinePlayers()).filter(player -> !ConfigManager.filter_players.contains(player.getName())).collect(Collectors.toList());
         for (OfflinePlayer player : offlinePlayers) {
@@ -53,7 +53,8 @@ public class EconomyData implements DataHandler {
             }
         }
         datas = (HashSet<DataPackage>) clone.clone();
-        return datas.size() > 0;
+        plugin.getLogger().info("經濟資料獲取完成。");
+        datas.size();
     }
 
     @Override

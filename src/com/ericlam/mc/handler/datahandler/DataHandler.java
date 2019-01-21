@@ -9,7 +9,7 @@ public interface DataHandler {
 
     Plugin plugin = MCTWWebAPI.getProvidingPlugin(MCTWWebAPI.class);
 
-    boolean loadDatas();
+    void loadDatas();
 
     HashSet<DataPackage> gainDataList();
 

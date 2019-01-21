@@ -67,10 +67,9 @@ public class APIHandler {
 
     public static void refreshDatas(Plugin plugin) {
         plugin.getLogger().info("正在更新 API 資料....");
-        boolean eco = EconomyData.getInstance().loadDatas();
-        boolean res = ResidenceData.getInstance().loadDatas();
-        boolean vip = VIPRankData.getInstance().loadDatas();
-        plugin.getLogger().info("API 資料更新" + (eco && res && vip ? "成功" : "失敗") + "。");
+        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> EconomyData.getInstance().loadDatas());
+        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> VIPRankData.getInstance().loadDatas());
+        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> ResidenceData.getInstance().loadDatas());
     }
 
     static JSONObject getLastUpdate() {

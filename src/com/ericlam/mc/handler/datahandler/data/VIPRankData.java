@@ -29,7 +29,7 @@ public class VIPRankData implements DataHandler {
     }
 
     @Override
-    public boolean loadDatas() {
+    public void loadDatas() {
         HashSet<DataPackage> clone = new HashSet<>();
         List<OfflinePlayer> vipers = Arrays.stream(Bukkit.getOfflinePlayers()).filter(player -> !ConfigManager.filter_players.contains(player.getName())).collect(Collectors.toList());
 
@@ -49,7 +49,8 @@ public class VIPRankData implements DataHandler {
             }
         }
         datas = (HashSet<DataPackage>) clone.clone();
-        return datas.size() > 0;
+        plugin.getLogger().info("VIP階級資料獲取完成。");
+        datas.size();
     }
 
     @Override
