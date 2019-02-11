@@ -15,7 +15,7 @@ public class ConfigManager {
 
     public static boolean premiumServer, debug;
     public static String server_name, steve_uuid;
-    public static List<String> filter_players;
+    public static List<String> filter_players, except_players;
     private boolean filter_enabled;
     static int port;
 
@@ -27,6 +27,7 @@ public class ConfigManager {
         port = config.getInt("web-port");
         premiumServer = config.getBoolean("premium");
         filter_players = config.getStringList("filter-players");
+        //except_players = config.getStringList("exception-players");
         server_name = config.getString("server-name");
         steve_uuid = config.getString("steve-uuid");
         debug = config.getBoolean("debug");

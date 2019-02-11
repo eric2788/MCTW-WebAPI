@@ -52,11 +52,8 @@ public class APIHandler {
             object.put("data",(int)aPackage.getData());
             object.put("uuid", ConfigManager.premiumServer ? player.getUniqueId().toString() : steveUUID);
             if (dataType == APIData.VIPRANK) {
-                String group = VaultHandler.permission.getPrimaryGroup(null, player);
-                if (group == null) {
-                    group = VaultHandler.permission.getPrimaryGroup(Bukkit.getWorlds().get(0).getName(), player);
-                }
-                if (!group.contains("VIP")) continue;
+                String group = ((VIPRankData) data).getGroups().get(player);
+                if (group == null || !group.contains("VIP")) continue;
                 object.put("group", group);
             }
             JSONObject jsonObject = new JSONObject(object);
@@ -67,8 +64,8 @@ public class APIHandler {
 
     public static void refreshDatas(Plugin plugin) {
         plugin.getLogger().info("正在更新 API 資料....");
-        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> EconomyData.getInstance().loadDatas());
-        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> VIPRankData.getInstance().loadDatas());
+        EconomyData.getInstance().loadDatas();
+        VIPRankData.getInstance().loadDatas();
         Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> ResidenceData.getInstance().loadDatas());
     }
 

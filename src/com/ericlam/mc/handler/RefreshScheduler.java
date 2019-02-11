@@ -16,7 +16,7 @@ public class RefreshScheduler {
                     APIHandler.refreshDatas(plugin);
                     localDateTime = LocalDateTime.now();
                 }
-            }.runTaskTimerAsynchronously(plugin, 3600 * 20L, 3600 * 20L);
+            }.runTaskTimerAsynchronously(plugin, 86400 * 20L, 86400 * 20L);
         }
     }
 

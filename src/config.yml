@@ -21,3 +21,5 @@ filter-players:
 # 檢測插件目前正在運行的狀態
 # 洗屏注意!!!!!
 debug: false
+exception-players:
+  - SchwettyBahls

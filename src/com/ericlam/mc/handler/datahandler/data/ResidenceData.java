@@ -1,7 +1,6 @@
 package com.ericlam.mc.handler.datahandler.data;
 
-import com.bekvon.bukkit.residence.Residence;
-import com.bekvon.bukkit.residence.containers.ResidencePlayer;
+import com.bekvon.bukkit.residence.api.ResidenceApi;
 import com.bekvon.bukkit.residence.protection.ClaimedResidence;
 import com.ericlam.mc.handler.datahandler.DataHandler;
 import com.ericlam.mc.handler.datahandler.DataPackage;
@@ -26,13 +25,18 @@ public class ResidenceData implements DataHandler {
     @Override
     public void loadDatas() {
         HashSet<DataPackage> clone = new HashSet<>();
-        ResidencePlayer user;
         List<OfflinePlayer> offlinePlayers = Arrays.stream(Bukkit.getOfflinePlayers()).filter(player -> !ConfigManager.filter_players.contains(player.getName())).collect(Collectors.toList());
         for (OfflinePlayer player : offlinePlayers) {
             if (ConfigManager.debug) plugin.getLogger().info("領地資料: 正在獲取 " + player.getName() + " 的資料");
-            user = Residence.getInstance().getPlayerManager().getResidencePlayer(player.getUniqueId());
             int size = 0;
-            for (ClaimedResidence residence : user.getResList()) {
+            //ResidencePlayer user = Residence.getInstance().getPlayerManager().getResidencePlayer(player.getUniqueId());  //old method
+            /*for (ClaimedResidence residence : user.getResList()) {
+                size += residence.getTotalSize();
+            }*/
+            List<String> str = ResidenceApi.getPlayerManager().getResidenceList(player.getUniqueId());
+            for (String name : str) {
+                ClaimedResidence residence = ResidenceApi.getResidenceManager().getByName(name);
+                if (residence == null) continue;
                 size += residence.getTotalSize();
             }
             if (size == 0) continue;
@@ -44,7 +48,6 @@ public class ResidenceData implements DataHandler {
         }
         datas = (HashSet<DataPackage>) clone.clone();
         plugin.getLogger().info("領地資料獲取完成。");
-        datas.size();
     }
 
     @Override

@@ -1,8 +1,6 @@
 package com.ericlam.mc.handler.datahandler.data;
 
 
-import com.earth2me.essentials.Essentials;
-import com.earth2me.essentials.User;
 import com.ericlam.mc.handler.VaultHandler;
 import com.ericlam.mc.handler.datahandler.DataHandler;
 import com.ericlam.mc.handler.datahandler.DataPackage;
@@ -21,9 +19,11 @@ public class EconomyData implements DataHandler {
     private final Economy economy;
     private HashSet<DataPackage> datas = new HashSet<>();
     private static EconomyData data;
+    //private final Essentials ess;
 
     private EconomyData() {
         economy = VaultHandler.economy;
+        // ess = (Essentials) Essentials.getProvidingPlugin(Essentials.class);
     }
 
     public static EconomyData getInstance() {
@@ -33,17 +33,17 @@ public class EconomyData implements DataHandler {
 
     @Override
     public void loadDatas() {
+
         HashSet<DataPackage> clone = new HashSet<>();
         List<OfflinePlayer> offlinePlayers = Arrays.stream(Bukkit.getOfflinePlayers()).filter(player -> !ConfigManager.filter_players.contains(player.getName())).collect(Collectors.toList());
         for (OfflinePlayer player : offlinePlayers) {
             if (ConfigManager.debug) plugin.getLogger().info("經濟資料: 正在獲取 " + player.getName() + " 的資料");
-            double money = economy.getBalance(player);
-            if (money == 0) {
-                Essentials ess = (Essentials) Essentials.getProvidingPlugin(Essentials.class);
+            double money = economy.getBalance(player, Bukkit.getWorlds().get(0).getName());
+            /*if (money == 0) {
                 User user = ess.getUser(player.getUniqueId());
                 if (user == null) continue;
                 money = user.getMoney().intValue();
-            }
+            }*/
             if (Math.round(money) == 0) continue;
             DataPackage dataPackage = new DataPackage(player,money);
             clone.add(dataPackage);
@@ -54,7 +54,6 @@ public class EconomyData implements DataHandler {
         }
         datas = (HashSet<DataPackage>) clone.clone();
         plugin.getLogger().info("經濟資料獲取完成。");
-        datas.size();
     }
 
     @Override
