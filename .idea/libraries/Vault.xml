@@ -3,8 +3,6 @@
     <CLASSES>
       <root url="jar://$PROJECT_DIR$/../LIBRARY-PLUGINS/Vault.jar!/" />
       <root url="jar://$PROJECT_DIR$/../LIBRARY-PLUGINS/Residence.jar!/" />
-      <root url="jar://$PROJECT_DIR$/../LIBRARY-PLUGINS/EssentialsX.jar!/" />
-      <root url="jar://$PROJECT_DIR$/../LIBRARY-PLUGINS/GroupManager.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
